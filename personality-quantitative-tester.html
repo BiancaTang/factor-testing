@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人格-量化因子适配测试器</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #165DFF;
+            --accent-color: #D4AF37;
+            --bg-color: #F5F7FA;
+            --card-bg: #FFFFFF;
+            --title-color: #1D2129;
+            --text-color: #4E5969;
+            --gray-color: #86909C;
+            --border-radius: 8px;
+            --transition: 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ========== Index Section ========== */
+        #section-index {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .index-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--title-color);
+            margin-bottom: 16px;
+        }
+
+        .index-subtitle {
+            font-size: 16px;
+            color: var(--text-color);
+            margin-bottom: 40px;
+        }
+
+        .geometric-decoration {
+            width: 120px;
+            height: 120px;
+            margin: 40px auto;
+            position: relative;
+        }
+
+        .geometric-circle {
+            position: absolute;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .circle-1 {
+            width: 120px;
+            height: 120px;
+            left: 0;
+            top: 0;
+            opacity: 0.3;
+        }
+
+        .circle-2 {
+            width: 80px;
+            height: 80px;
+            left: 20px;
+            top: 20px;
+            opacity: 0.5;
+        }
+
+        .circle-3 {
+            width: 40px;
+            height: 40px;
+            left: 40px;
+            top: 40px;
+            background: var(--primary-color);
+            opacity: 0.8;
+        }
+
+        .value-points {
+            text-align: left;
+            margin: 40px 0;
+            padding: 20px;
+            background: rgba(22, 93, 255, 0.05);
+            border-radius: var(--border-radius);
+        }
+
+        .value-point {
+            font-size: 14px;
+            margin: 12px 0;
+            color: var(--text-color);
+        }
+
+        .value-point::before {
+            content: "✅ ";
+            margin-right: 8px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 16px 24px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background: #0052CC;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(22, 93, 255, 0.3);
+        }
+
+        .compliance-statement {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-top: 40px;
+            line-height: 1.8;
+        }
+
+        /* ========== Quiz Section ========== */
+        #section-quiz {
+            padding: 20px 0;
+        }
+
+        .progress-header {
+            margin-bottom: 30px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--gray-color);
+            margin-bottom: 8px;
+        }
+
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: #E8EAEF;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width var(--transition);
+        }
+
+        .question-content {
+            margin: 60px 0;
+            text-align: center;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--title-color);
+            line-height: 1.8;
+        }
+
+        .options-container {
+            margin: 40px 0;
+        }
+
+        .option {
+            padding: 16px 20px;
+            margin: 12px 0;
+            background: var(--card-bg);
+            border: 2px solid #E8EAEF;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all var(--transition);
+            text-align: left;
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .option:hover {
+            border-color: var(--primary-color);
+            background: #F0F6FF;
+        }
+
+        .option.selected {
+            border-color: var(--primary-color);
+            background: #F0F6FF;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 16px;
+        }
+
+        .option-label {
+            display: block;
+            width: 100%;
+        }
+
+        .quiz-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+            padding: 12px 20px;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-secondary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary.submit {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        /* ========== Loading Section ========== */
+        #section-loading {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0 20px;
+        }
+
+        #section-loading.active {
+            display: flex;
+        }
+
+        .loading-animation {
+            margin-bottom: 30px;
+        }
+
+        .loading-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin: 0 6px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: loadingBounce 1.4s infinite;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes loadingBounce {
+            0%, 80%, 100% {
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+            40% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .loading-text {
+            font-size: 16px;
+            color: var(--text-color);
+            text-align: center;
+        }
+
+        /* ========== Result Section ========== */
+        #section-result {
+            padding: 20px 0 40px 0;
+        }
+
+        .result-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+
+        .tag-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .personality-tag {
+            display: inline-block;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--accent-color) 0%, #E5C547 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .tag-description {
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.8;
+        }
+
+        .radar-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        #radarCanvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .factor-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .factor-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .factor-name {
+            min-width: 80px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--title-color);
+        }
+
+        .factor-badge {
+            padding: 2px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .badge-high {
+            background: #E8F3FF;
+            color: var(--primary-color);
+        }
+
+        .badge-medium {
+            background: #F6E8FF;
+            color: #9254DE;
+        }
+
+        .badge-neutral {
+            background: #FFF7E6;
+            color: #FA8C16;
+        }
+
+        .badge-low {
+            background: #FFE8E8;
+            color: #FF4D4F;
+        }
+
+        .factor-bar-container {
+            flex: 1;
+            height: 24px;
+            background: #E8EAEF;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .factor-bar-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 4px;
+            width: 0%;
+            transition: width var(--transition);
+        }
+
+        .factor-score {
+            min-width: 40px;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--title-color);
+        }
+
+        .recommendation-card {
+            background: linear-gradient(135deg, rgba(22, 93, 255, 0.05) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border: 1px solid rgba(22, 93, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 16px;
+            margin: 12px 0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .recommendation-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .recommendation-text {
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .portfolio-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .portfolio-card {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0052CC 100%);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .portfolio-factor {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .portfolio-weight {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 8px;
+        }
+
+        .portfolio-weight-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .etf-list {
+            list-style: none;
+            margin: 12px 0;
+        }
+
+        .etf-item {
+            font-size: 14px;
+            color: var(--text-color);
+            padding: 6px 0;
+            border-bottom: 1px solid #E8EAEF;
+        }
+
+        .etf-item:last-child {
+            border-bottom: none;
+        }
+
+        .etf-note {
+            font-size: 12px;
+            color: var(--gray-color);
+            margin-top: 12px;
+            font-style: italic;
+        }
+
+        .holding-period {
+            background: #F0F6FF;
+            border-left: 3px solid var(--primary-color);
+            padding: 12px 16px;
+            margin: 16px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .result-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .btn-secondary.full {
+            width: 100%;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 24px;
+            max-width: 90%;
+            text-align: center;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--title-color);
+            margin-bottom: 12px;
+        }
+
+        .modal-message {
+            font-size: 14px;
+            color: var(--text-color);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+
+        .btn-modal {
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        .btn-modal-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-modal-primary:hover {
+            background: #0052CC;
+        }
+
+        .btn-modal-secondary {
+            background: #E8EAEF;
+            color: var(--text-color);
+        }
+
+        .btn-modal-secondary:hover {
+            background: #D9DCE3;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #000000;
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity var(--transition);
+            z-index: 2000;
+            animation: slideUp 0.3s ease;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 16px;
+            }
+
+            .index-title {
+                font-size: 24px;
+            }
+
+            .question-text {
+                font-size: 16px;
+            }
+
+            .portfolio-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Index Section -->
+        <div id="section-index" class="section active">
+            <h1 class="index-title">你的性格，适合哪种量化因子？</h1>
+            <p class="index-subtitle">2 分钟测试，找到最适配你性格的投资策略</p>
+            
+            <div class="geometric-decoration">
+                <div class="geometric-circle circle-1"></div>
+                <div class="geometric-circle circle-2"></div>
+                <div class="geometric-circle circle-3"></div>
+            </div>
+
+            <div class="value-points">
+                <div class="value-point">基于大五人格模型 + 行为金融学设计</div>
+                <div class="value-point">8 大量化因子精准匹配</div>
+                <div class="value-point">专属策略建议 + 行为偏差优化</div>
+            </div>
+
+            <button class="btn-primary" onclick="app.startQuiz()">开始测试</button>
+
+            <div class="compliance-statement">
+                本测试仅供参考，不构成任何投资建议。市场有风险，投资需谨慎。测试结果完全由您的答案决定，系统不负责任何投资决策后果。
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div id="section-quiz" class="section">
+            <div class="progress-header">
+                <div class="progress-text" id="progress-text">第 1 / 20 题</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="progress-bar"></div>
+                </div>
+            </div>
+
+            <div class="question-content">
+                <div class="question-text" id="question-text"></div>
+            </div>
+
+            <div class="options-container" id="options-container"></div>
+
+            <div class="quiz-actions">
+                <button class="btn-secondary" id="btn-prev" onclick="app.prevQuestion()" style="display: none;">上一题</button>
+                <button class="btn-secondary submit" id="btn-next" onclick="app.nextQuestion()" disabled>下一题</button>
+            </div>
+        </div>
+
+        <!-- Loading Section -->
+        <div id="section-loading" class="section">
+            <div class="loading-animation">
+                <span class="loading-dot"></span>
+                <span class="loading-dot"></span>
+                <span class="loading-dot"></span>
+            </div>
+            <div class="loading-text">正在为你匹配专属量化因子…</div>
+        </div>
+
+        <!-- Result Section -->
+        <div id="section-result" class="section">
+            <div class="result-card">
+                <div class="result-title">你的人格标签</div>
+                <div class="tag-container">
+                    <div class="personality-tag" id="personality-tag"></div>
+                    <div class="tag-description" id="tag-description"></div>
+                </div>
+
+                <div class="radar-container">
+                    <canvas id="radarCanvas" width="300" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-title">量化因子适配度排行</div>
+                <div class="factor-list" id="factor-list"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-title">专属因子组合方案</div>
+                <div class="portfolio-cards" id="portfolio-cards"></div>
+
+                <div class="result-title" style="margin-top: 20px;">对应标的参考</div>
+                <div id="etf-references"></div>
+
+                <div id="holding-period"></div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-title">投资行为优化建议</div>
+                <div id="behavior-recommendations"></div>
+            </div>
+
+            <div class="result-actions">
+                <button class="btn-secondary full" onclick="app.restartTest()">重新测试</button>
+                <button class="btn-secondary full" onclick="app.copyResult()">复制结果</button>
+            </div>
+
+            <div class="compliance-statement">
+                本测试仅供参考，不构成任何投资建议。市场有风险，投资需谨慎。所有标的参考仅作指数参考，不构成投资推荐。
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-title" id="modal-title"></div>
+            <div class="modal-message" id="modal-message"></div>
+            <div class="modal-actions" id="modal-actions"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ========== Global Configuration ==========
+        const questionList = [
+            { id: 1, content: "我愿意尝试新的投资思路和小众策略，不局限于传统方法", dimension: "openness", isReverse: false },
+            { id: 2, content: "做投资决策前，我会提前制定好明确的买入、卖出计划", dimension: "conscientiousness", isReverse: false },
+            { id: 3, content: "我经常和朋友、社群交流投资信息，喜欢跟着热点方向布局", dimension: "extraversion", isReverse: false },
+            { id: 4, content: "持仓出现浮亏时，我很容易焦虑不安，甚至影响睡眠", dimension: "neuroticism", isReverse: false },
+            { id: 5, content: "当身边人都在买某只股票时，我很难坚持自己原本的计划", dimension: "agreeableness", isReverse: false },
+            { id: 6, content: "我更喜欢成熟稳定的投资标的，不喜欢不确定性强的新事物", dimension: "openness", isReverse: true },
+            { id: 7, content: "我买卖经常凭当下感觉，不会提前做详细计划", dimension: "conscientiousness", isReverse: true },
+            { id: 8, content: "我更习惯自己独立研究，很少主动和别人讨论投资标的", dimension: "extraversion", isReverse: true },
+            { id: 9, content: "面对亏损我能保持平静，不会因为短期波动乱了节奏", dimension: "neuroticism", isReverse: true },
+            { id: 10, content: "即使和多数人意见不同，我也敢做出逆向的投资决策", dimension: "agreeableness", isReverse: true },
+            { id: 11, content: "为了追求更高收益，我可以接受本金短期回撤20%以上", dimension: "riskTolerance", isReverse: false },
+            { id: 12, content: "同样金额的亏损带来的痛苦，远大于同等盈利带来的快乐", dimension: "lossAversion", isReverse: false },
+            { id: 13, content: "我愿意持有一只标的3年以上，来换取长期的收益回报", dimension: "patience", isReverse: false },
+            { id: 14, content: "我觉得自己的选股/择时能力，超过市场上大多数投资者", dimension: "overconfidence", isReverse: false },
+            { id: 15, content: "比起高收益高波动，我更愿意赚稳健、波动小的钱", dimension: "riskTolerance", isReverse: true },
+            { id: 16, content: "看到持仓浮亏，我会比看到浮盈更在意、更频繁地看盘", dimension: "lossAversion", isReverse: false },
+            { id: 17, content: "持有标的超过半年不涨，我就会忍不住想换仓", dimension: "patience", isReverse: true },
+            { id: 18, content: "我经常因为觉得自己判断正确，而重仓押注单一标的", dimension: "overconfidence", isReverse: false },
+            { id: 19, content: "我做投资以来，从来没有过任何一次后悔的操作", dimension: "lie", isReverse: false },
+            { id: 20, content: "面对亏损，我从来不会有任何情绪波动", dimension: "lie", isReverse: false }
+        ];
+
+        const personalityDimensions = [
+            { key: "openness", name: "开放性", totalQuestions: 2 },
+            { key: "conscientiousness", name: "尽责性", totalQuestions: 2 },
+            { key: "extraversion", name: "外倾性", totalQuestions: 2 },
+            { key: "agreeableness", name: "宜人性", totalQuestions: 2 },
+            { key: "neuroticism", name: "神经质", totalQuestions: 2 },
+            { key: "riskTolerance", name: "风险承受力", totalQuestions: 2 },
+            { key: "lossAversion", name: "损失厌恶度", totalQuestions: 2 },
+            { key: "patience", name: "持有耐心", totalQuestions: 2 },
+            { key: "overconfidence", name: "过度自信", totalQuestions: 2 }
+        ];
+
+        const factorWeights = {
+            value: {
+                openness: -0.4, conscientiousness: 0.8, extraversion: -0.5,
+                agreeableness: 0.2, neuroticism: 0.3, riskTolerance: -0.5,
+                lossAversion: 0.4, patience: 0.9, overconfidence: -0.3
+            },
+            growth: {
+                openness: 0.8, conscientiousness: 0.2, extraversion: 0.4,
+                agreeableness: -0.5, neuroticism: -0.9, riskTolerance: 0.9,
+                lossAversion: -0.8, patience: 0.3, overconfidence: 0.5
+            },
+            momentum: {
+                openness: 0.3, conscientiousness: -0.4, extraversion: 0.8,
+                agreeableness: 0.3, neuroticism: -0.3, riskTolerance: 0.4,
+                lossAversion: -0.3, patience: -0.6, overconfidence: 0.4
+            },
+            lowVol: {
+                openness: -0.5, conscientiousness: 0.5, extraversion: -0.6,
+                agreeableness: 0.4, neuroticism: 0.9, riskTolerance: -0.9,
+                lossAversion: 0.9, patience: 0.5, overconfidence: -0.5
+            },
+            quality: {
+                openness: 0.3, conscientiousness: 0.9, extraversion: -0.4,
+                agreeableness: 0.3, neuroticism: 0.4, riskTolerance: -0.5,
+                lossAversion: 0.5, patience: 0.8, overconfidence: -0.4
+            },
+            smallCap: {
+                openness: 0.6, conscientiousness: -0.5, extraversion: 0.9,
+                agreeableness: -0.6, neuroticism: -0.8, riskTolerance: 0.8,
+                lossAversion: -0.7, patience: -0.5, overconfidence: 0.8
+            },
+            dividend: {
+                openness: -0.5, conscientiousness: 0.6, extraversion: -0.5,
+                agreeableness: 0.4, neuroticism: 0.8, riskTolerance: -0.8,
+                lossAversion: 0.8, patience: 0.9, overconfidence: -0.4
+            },
+            reversal: {
+                openness: 0.4, conscientiousness: -0.5, extraversion: -0.3,
+                agreeableness: -0.7, neuroticism: -0.2, riskTolerance: 0.5,
+                lossAversion: -0.3, patience: -0.7, overconfidence: 0.2
+            }
+        };
+
+        const factorNames = {
+            value: "价值因子", growth: "成长因子", momentum: "动量因子",
+            lowVol: "低波因子", quality: "质量因子", smallCap: "小盘因子",
+            dividend: "红利因子", reversal: "反转因子"
+        };
+
+        const factorEtfRef = {
+            value: ["沪深300价值指数", "中证红利价值指数"],
+            growth: ["创业板指", "科创50指数", "中证1000成长指数"],
+            momentum: ["中证500动量指数", "沪深300动量指数"],
+            lowVol: ["沪深300低波指数", "中证500低波指数"],
+            quality: ["中证质量指数", "MSCI中国A股质量指数"],
+            smallCap: ["中证1000指数", "国证2000指数"],
+            dividend: ["中证红利指数", "上证红利指数"],
+            reversal: ["适合手动逆向交易，无对应主流ETF"]
+        };
+
+        const personalityTags = {
+            defensiveDividend: {
+                name: "防御红利型",
+                description: "你对波动和亏损比较敏感，优先追求本金安全，适合低波动、高分红的防御类策略，赚稳稳的现金流收益。",
+                conditions: (scores) => scores.neuroticism >= 70 && scores.lossAversion >= 70 && scores.riskTolerance < 60
+            },
+            stableValue: {
+                name: "稳健价值型",
+                description: "你是自律且有耐心的长期主义者，情绪稳定、纪律性强，能忍受长期等待换取确定性收益，最适合靠基本面和时间赚钱的策略。",
+                conditions: (scores) => scores.conscientiousness >= 70 && scores.patience >= 70 && scores.riskTolerance < 60
+            },
+            growthExplorer: {
+                name: "成长探索型",
+                description: "你对新事物充满好奇，愿意为高收益承担波动，擅长挖掘新兴机会，适合成长赛道、产业趋势类的投资策略。",
+                conditions: (scores) => scores.openness >= 70 && scores.riskTolerance >= 70
+            },
+            momentumTrader: {
+                name: "动量交易型",
+                description: "你对市场情绪敏感，交易活跃度高，喜欢紧跟市场热点，适合短周期、顺趋势的交易类策略。",
+                conditions: (scores) => scores.extraversion >= 70 && scores.patience < 60 && scores.overconfidence >= 60
+            },
+            balanced: {
+                name: "均衡适配型",
+                description: "你的人格特质较为均衡，对不同风格的策略都有一定适配度，适合通过分散化的因子组合平滑波动。",
+                conditions: () => true
+            }
+        };
+
+        // ========== Core Application Logic ==========
+        const app = {
+            currentQuestion: 1,
+            answers: [],
+            result: null,
+
+            init() {
+                this.loadProgress();
+                this.renderQuizUI();
+            },
+
+            loadProgress() {
+                const saved = localStorage.getItem('quiz_progress');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    this.currentQuestion = data.currentQuestion;
+                    this.answers = data.answers;
+                }
+            },
+
+            saveProgress() {
+                localStorage.setItem('quiz_progress', JSON.stringify({
+                    currentQuestion: this.currentQuestion,
+                    answers: this.answers
+                }));
+            },
+
+            startQuiz() {
+                const saved = localStorage.getItem('quiz_progress');
+                if (saved && this.answers.length > 0) {
+                    this.showModal(
+                        '检测到未完成的测试',
+                        '是否继续作答？',
+                        [
+                            { text: '继续', onClick: () => this.goToQuiz() },
+                            { text: '重新开始', onClick: () => this.newQuiz() }
+                        ]
+                    );
+                } else {
+                    this.newQuiz();
+                }
+            },
+
+            newQuiz() {
+                this.currentQuestion = 1;
+                this.answers = new Array(20).fill(null);
+                this.saveProgress();
+                this.goToQuiz();
+            },
+
+            goToQuiz() {
+                this.switchSection('quiz');
+                this.renderQuizUI();
+                this.closeModal();
+            },
+
+            renderQuizUI() {
+                const question = questionList[this.currentQuestion - 1];
+                document.getElementById('question-text').textContent = question.content;
+                document.getElementById('progress-text').textContent = `第 ${this.currentQuestion} / 20 题`;
+                
+                const progress = (this.currentQuestion / 20) * 100;
+                document.getElementById('progress-bar').style.width = progress + '%';
+
+                this.renderOptions(question);
+                this.updateButtons();
+            },
+
+            renderOptions(question) {
+                const container = document.getElementById('options-container');
+                container.innerHTML = '';
+                
+                const optionTexts = ['非常不同意', '不同意', '中立', '同意', '非常同意'];
+                
+                optionTexts.forEach((text, index) => {
+                    const score = index + 1;
+                    const div = document.createElement('div');
+                    div.className = `option ${this.answers[this.currentQuestion - 1] === score ? 'selected' : ''}`;
+                    div.innerHTML = `<label class="option-label">${text}</label>`;
+                    div.onclick = () => this.selectOption(score);
+                    container.appendChild(div);
+                });
+            },
+
+            selectOption(score) {
+                this.answers[this.currentQuestion - 1] = score;
+                this.saveProgress();
+                this.renderOptions(questionList[this.currentQuestion - 1]);
+                this.updateButtons();
+            },
+
+            updateButtons() {
+                const prevBtn = document.getElementById('btn-prev');
+                const nextBtn = document.getElementById('btn-next');
+                const isAnswered = this.answers[this.currentQuestion - 1] !== null;
+
+                if (this.currentQuestion === 1) {
+                    prevBtn.style.display = 'none';
+                } else {
+                    prevBtn.style.display = 'block';
+                }
+
+                if (this.currentQuestion === 20) {
+                    nextBtn.textContent = '提交';
+                    nextBtn.className = 'btn-secondary submit';
+                } else {
+                    nextBtn.textContent = '下一题';
+                    nextBtn.className = 'btn-secondary submit';
+                }
+
+                nextBtn.disabled = !isAnswered;
+            },
+
+            prevQuestion() {
+                if (this.currentQuestion > 1) {
+                    this.currentQuestion--;
+                    this.saveProgress();
+                    this.renderQuizUI();
+                }
+            },
+
+            nextQuestion() {
+                if (this.currentQuestion < 20) {
+                    this.currentQuestion++;
+                    this.saveProgress();
+                    this.renderQuizUI();
+                } else {
+                    this.submitQuiz();
+                }
+            },
+
+            submitQuiz() {
+                if (!this.validateAnswers()) {
+                    this.showModal(
+                        '无效作答',
+                        '请根据真实情况作答，结果才会更准确哦',
+                        [{ text: '返回', onClick: () => this.closeModal() }]
+                    );
+                    return;
+                }
+
+                this.switchSection('loading');
+                setTimeout(() => {
+                    try {
+                        this.calculateResult();
+                        this.renderResult();
+                        requestAnimationFrame(() => {
+                            this.switchSection('result');
+                        });
+                    } catch (error) {
+                        console.error('计算或渲染出错:', error);
+                        this.showModal('出错了', '计算结果时出现问题，请重新测试', [
+                            { text: '返回', onClick: () => {
+                                this.closeModal();
+                                this.restartTest();
+                            }}
+                        ]);
+                    }
+                }, 1500);
+            },
+
+            validateAnswers() {
+                const q19 = this.answers[18];
+                const q20 = this.answers[19];
+                return !(q19 >= 4 && q20 >= 4);
+            },
+
+            calculateResult() {
+                const personalityScores = this.calculatePersonalityScores();
+                const factorScores = this.calculateFactorScores(personalityScores);
+                const topFactors = this.getTopFactors(factorScores);
+                const tag = this.determinePersonalityTag(personalityScores);
+                const recommendations = this.generateRecommendations(personalityScores);
+
+                this.result = {
+                    personalityScores,
+                    factorScores,
+                    topFactors,
+                    tag,
+                    recommendations
+                };
+
+                localStorage.setItem('quiz_result', JSON.stringify(this.result));
+            },
+
+            calculatePersonalityScores() {
+                const scores = {};
+                personalityDimensions.forEach(dim => {
+                    scores[dim.key] = 0;
+                });
+
+                questionList.forEach((q, idx) => {
+                    if (q.dimension === 'lie') return;
+                    
+                    let score = this.answers[idx];
+                    if (q.isReverse) {
+                        score = 6 - score;
+                    }
+                    scores[q.dimension] += score;
+                });
+
+                const normalized = {};
+                Object.keys(scores).forEach(key => {
+                    const rawScore = scores[key];
+                    normalized[key] = Math.round((rawScore - 2) / 8 * 100);
+                });
+
+                return normalized;
+            },
+
+            calculateFactorScores(personalityScores) {
+                const scores = {};
+                Object.keys(factorWeights).forEach(factor => {
+                    let score = 50;
+                    const weights = factorWeights[factor];
+                    
+                    Object.keys(weights).forEach(dim => {
+                        const normalizedScore = personalityScores[dim] / 100 - 0.5;
+                        score += normalizedScore * weights[dim] * 25;
+                    });
+
+                    scores[factor] = Math.max(0, Math.min(100, Math.round(score)));
+                });
+
+                return scores;
+            },
+
+            getTopFactors(factorScores) {
+                const sorted = Object.entries(factorScores)
+                    .map(([factor, score]) => ({ factor, score }))
+                    .sort((a, b) => b.score - a.score);
+
+                let topThree = sorted.slice(0, 3);
+
+                if (topThree.length === 3) {
+                    const factors = topThree.map(f => f.factor);
+                    if (factors.includes('value') && factors.includes('dividend')) {
+                        const lower = topThree.find(f => f.factor === 'dividend' || f.factor === 'value');
+                        topThree = topThree.filter(f => f !== lower);
+                        topThree.push(sorted[3]);
+                    } else if (factors.includes('growth') && factors.includes('smallCap')) {
+                        const lower = topThree.find(f => f.factor === 'growth' || f.factor === 'smallCap');
+                        topThree = topThree.filter(f => f !== lower);
+                        topThree.push(sorted[3]);
+                    }
+                }
+
+                const totalScore = topThree.reduce((sum, f) => sum + f.score, 0);
+                let weights = topThree.map(f => f.score / totalScore * 100);
+
+                weights = weights.map(w => {
+                    if (w > 45) return 45;
+                    if (w < 20) return 20;
+                    return w;
+                });
+
+                const sum = weights.reduce((a, b) => a + b, 0);
+                weights = weights.map(w => Math.round(w / sum * 100));
+
+                return topThree.map((f, idx) => ({
+                    factor: f.factor,
+                    name: factorNames[f.factor],
+                    score: f.score,
+                    weight: weights[idx]
+                }));
+            },
+
+            determinePersonalityTag(scores) {
+                const tags = Object.values(personalityTags);
+                for (let tag of tags) {
+                    if (tag.conditions(scores)) {
+                        return tag;
+                    }
+                }
+                return personalityTags.balanced;
+            },
+
+            generateRecommendations(scores) {
+                const entries = Object.entries(scores);
+                entries.sort((a, b) => b[1] - a[1]);
+                
+                const highest = entries[0][0];
+                const lowest = entries[entries.length - 1][0];
+
+                const adviceMap = {
+                    neuroticism: "建议关闭每日收益提醒，设置定投自动执行，减少手动操作频率",
+                    conscientiousness: "建议提前写好交易计划并严格执行，避免盘中临时决策",
+                    overconfidence: "建议单标的仓位不超过 20%，避免重仓押注单一方向",
+                    patience: "建议选择有封闭期的产品，强制拉长持有周期",
+                    lossAversion: "建议分散配置多类资产，降低单一标的波动对心态的影响",
+                    riskTolerance: "建议控制权益类资产仓位，搭配债券类资产平滑组合波动"
+                };
+
+                const recommendations = [];
+                if (adviceMap[highest]) {
+                    recommendations.push({ icon: "💡", text: adviceMap[highest] });
+                }
+                if (adviceMap[lowest] && lowest !== highest) {
+                    recommendations.push({ icon: "📊", text: adviceMap[lowest] });
+                }
+
+                return recommendations;
+            },
+
+            renderResult() {
+                try {
+                    this.renderPersonalityTag();
+                    this.renderRadarChart();
+                    this.renderFactorRanking();
+                    this.renderPortfolio();
+                    this.renderRecommendations();
+                } catch (error) {
+                    console.error('渲染结果时出错:', error);
+                    throw error;
+                }
+            },
+
+            renderPersonalityTag() {
+                const tag = this.result.tag;
+                document.getElementById('personality-tag').textContent = tag.name;
+                document.getElementById('tag-description').textContent = tag.description;
+            },
+
+            renderRadarChart() {
+                const canvas = document.getElementById('radarCanvas');
+                const ctx = canvas.getContext('2d');
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+                const radius = 100;
+                const angles = personalityDimensions.length;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                const angleSlice = (Math.PI * 2) / angles;
+
+                ctx.strokeStyle = '#E8EAEF';
+                ctx.lineWidth = 1;
+                for (let i = 1; i <= 5; i++) {
+                    ctx.beginPath();
+                    for (let j = 0; j <= angles; j++) {
+                        const angle = angleSlice * j - Math.PI / 2;
+                        const x = centerX + (radius * i / 5) * Math.cos(angle);
+                        const y = centerY + (radius * i / 5) * Math.sin(angle);
+                        if (j === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                }
+
+                ctx.strokeStyle = '#86909C';
+                ctx.lineWidth = 0.5;
+                for (let i = 0; i < angles; i++) {
+                    const angle = angleSlice * i - Math.PI / 2;
+                    const x = centerX + radius * Math.cos(angle);
+                    const y = centerY + radius * Math.sin(angle);
+                    ctx.beginPath();
+                    ctx.moveTo(centerX, centerY);
+                    ctx.lineTo(x, y);
+                    ctx.stroke();
+                }
+
+                ctx.fillStyle = 'rgba(22, 93, 255, 0.1)';
+                ctx.strokeStyle = '#165DFF';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                personalityDimensions.forEach((dim, idx) => {
+                    const angle = angleSlice * idx - Math.PI / 2;
+                    const score = this.result.personalityScores[dim.key] / 100;
+                    const x = centerX + (radius * score) * Math.cos(angle);
+                    const y = centerY + (radius * score) * Math.sin(angle);
+                    if (idx === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                });
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.fillStyle = '#165DFF';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                personalityDimensions.forEach((dim, idx) => {
+                    const angle = angleSlice * idx - Math.PI / 2;
+                    const x = centerX + (radius + 25) * Math.cos(angle);
+                    const y = centerY + (radius + 25) * Math.sin(angle);
+                    ctx.fillText(dim.name, x, y);
+                });
+            },
+
+            renderFactorRanking() {
+                const container = document.getElementById('factor-list');
+                container.innerHTML = '';
+
+                const sorted = Object.entries(this.result.factorScores)
+                    .map(([factor, score]) => ({ factor, name: factorNames[factor], score }))
+                    .sort((a, b) => b.score - a.score);
+
+                sorted.forEach(item => {
+                    let badgeClass = 'badge-high';
+                    let badgeText = '高度适配';
+                    if (item.score < 40) {
+                        badgeClass = 'badge-low';
+                        badgeText = '适配度低';
+                    } else if (item.score < 60) {
+                        badgeClass = 'badge-neutral';
+                        badgeText = '中性适配';
+                    } else if (item.score < 80) {
+                        badgeClass = 'badge-medium';
+                        badgeText = '较为适配';
+                    }
+
+                    const div = document.createElement('div');
+                    div.className = 'factor-item';
+                    div.innerHTML = `
+                        <div class="factor-name">${item.name}</div>
+                        <div class="factor-badge ${badgeClass}">${badgeText}</div>
+                        <div class="factor-bar-container" style="flex: 1;">
+                            <div class="factor-bar-fill" style="width: ${item.score}%;"></div>
+                        </div>
+                        <div class="factor-score">${item.score}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            },
+
+            renderPortfolio() {
+                const container = document.getElementById('portfolio-cards');
+                container.innerHTML = '';
+
+                this.result.topFactors.forEach(factor => {
+                    const div = document.createElement('div');
+                    div.className = 'portfolio-card';
+                    div.innerHTML = `
+                        <div class="portfolio-factor">${factor.name}</div>
+                        <div class="portfolio-weight">${factor.weight}%</div>
+                        <div class="portfolio-weight-label">配置比例</div>
+                    `;
+                    container.appendChild(div);
+                });
+
+                const etfContainer = document.getElementById('etf-references');
+                etfContainer.innerHTML = '';
+
+                const topFactor = this.result.topFactors[0];
+                const etfs = factorEtfRef[topFactor.factor];
+
+                let html = '<ul class="etf-list">';
+                etfs.forEach(etf => {
+                    html += `<li class="etf-item">${etf}</li>`;
+                });
+                html += '</ul>';
+                html += '<div class="etf-note">仅作指数参考，不构成投资推荐</div>';
+                etfContainer.innerHTML = html;
+
+                const holdingMap = {
+                    value: '1-3 年',
+                    quality: '1-3 年',
+                    dividend: '1-3 年',
+                    growth: '6 个月 - 2 年',
+                    lowVol: '6 个月 - 2 年',
+                    momentum: '1-6 个月',
+                    smallCap: '1-6 个月',
+                    reversal: '1-6 个月'
+                };
+
+                const period = holdingMap[topFactor.factor];
+                document.getElementById('holding-period').innerHTML = 
+                    `<div class="holding-period">💼 建议持仓周期：${period}</div>`;
+            },
+
+            renderRecommendations() {
+                const container = document.getElementById('behavior-recommendations');
+                container.innerHTML = '';
+
+                this.result.recommendations.forEach(rec => {
+                    const div = document.createElement('div');
+                    div.className = 'recommendation-card';
+                    div.innerHTML = `
+                        <div class="recommendation-icon">${rec.icon}</div>
+                        <div class="recommendation-text">${rec.text}</div>
+                    `;
+                    container.appendChild(div);
+                });
+            },
+
+            restartTest() {
+                localStorage.removeItem('quiz_progress');
+                localStorage.removeItem('quiz_result');
+                this.currentQuestion = 1;
+                this.answers = new Array(20).fill(null);
+                this.result = null;
+                this.switchSection('index');
+            },
+
+            copyResult() {
+                const tag = this.result.tag;
+                const topFactors = this.result.topFactors;
+                
+                let text = `🎯 人格标签：${tag.name}\n\n`;
+                text += `📊 专属因子组合：\n`;
+                topFactors.forEach(f => {
+                    text += `${f.name} - ${f.weight}%\n`;
+                });
+                text += `\n💡 这是基于人格-量化因子适配测试的结果，仅供参考。`;
+
+                navigator.clipboard.writeText(text).then(() => {
+                    this.showToast('复制成功，可分享给好友');
+                });
+            },
+
+            switchSection(section) {
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(`section-${section}`).classList.add('active');
+            },
+
+            showModal(title, message, actions) {
+                const modal = document.getElementById('modal');
+                document.getElementById('modal-title').textContent = title;
+                document.getElementById('modal-message').textContent = message;
+                
+                const actionsContainer = document.getElementById('modal-actions');
+                actionsContainer.innerHTML = '';
+                
+                actions.forEach(action => {
+                    const btn = document.createElement('button');
+                    btn.className = action.className || 'btn-modal btn-modal-primary';
+                    btn.textContent = action.text;
+                    btn.onclick = action.onClick;
+                    actionsContainer.appendChild(btn);
+                });
+
+                modal.classList.add('active');
+            },
+
+            closeModal() {
+                document.getElementById('modal').classList.remove('active');
+            },
+
+            showToast(message) {
+                const toast = document.getElementById('toast');
+                toast.textContent = message;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2000);
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => app.init());
+    </script>
+</body>
+</html>
