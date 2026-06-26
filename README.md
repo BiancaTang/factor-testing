@@ -4,7 +4,7 @@
 
 ## 部署到云服务器
 
-### 1. 推送代码到 GitHub
+### 1. 推送代码到 Gitee
 
 ```bash
 git add .
@@ -16,7 +16,7 @@ git push
 
 ```bash
 # 首次部署
-git clone https://github.com/BiancaTang/factor-testing.git
+git clone https://gitee.com/aleeeeeeei/factor-testing.git
 cd factor-testing
 
 # 以后更新
