@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>因子人格测试</title>
+    <title>投资人格测试</title>
     <style>
         * {
             margin: 0;
@@ -450,6 +450,69 @@
             text-align: center;
         }
 
+        .promo-image-wrapper {
+            margin-top: 24px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            border: 1px solid #E8EAEF;
+        }
+
+        .promo-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ========== Join Group Section ========== */
+        #section-join {
+            padding: 24px 0 40px 0;
+        }
+
+        .join-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 28px 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+            text-align: center;
+        }
+
+        .join-headline {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--title-color);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .qrcode-wrapper {
+            width: 220px;
+            margin: 0 auto 20px;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid #E8EAEF;
+            border-radius: var(--border-radius);
+        }
+
+        .qrcode-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .join-follow {
+            font-size: 15px;
+            color: var(--text-color);
+            margin-bottom: 16px;
+        }
+
+        #section-join .promo-image-wrapper {
+            margin-bottom: 24px;
+        }
+
+        #section-join .btn-primary {
+            margin-top: 0;
+        }
+
         .result-card {
             background: var(--card-bg);
             border-radius: var(--border-radius);
@@ -799,7 +862,7 @@
     <div class="container">
         <!-- Index Section -->
         <div id="section-index" class="section active">
-            <h1 class="index-title">因子人格测试</h1>
+            <h1 class="index-title">投资人格测试</h1>
             <p class="index-subtitle">你的投资灵魂，是什么形状？</p>
             
             <div class="geometric-decoration">
@@ -852,10 +915,25 @@
             <div class="loading-text">正在扫描你的投资灵魂，匹配专属量化因子…</div>
         </div>
 
+        <!-- Join Group Section -->
+        <div id="section-join" class="section">
+            <div class="join-card">
+                <p class="join-headline">加群用赛马量化ai定制专属于你的投资策略</p>
+                <div class="qrcode-wrapper">
+                    <img class="qrcode-image" src="pic/wechat-group-qrcode.png" alt="投资人格测试微信群二维码" />
+                </div>
+                <p class="join-follow">想加入我们的同学请关注👇</p>
+                <div class="promo-image-wrapper">
+                    <img class="promo-image" src="pic/summer-camp-promo.png" alt="赛马量化AI夏令营" />
+                </div>
+                <button class="btn-primary" onclick="app.viewResult()">已加群，立刻查看结果！</button>
+            </div>
+        </div>
+
         <!-- Result Section -->
         <div id="section-result" class="section">
             <div class="result-card personality-hero-card">
-                <div class="result-title">你的因子人格</div>
+                <div class="result-title">你的投资人格</div>
                 <div class="personality-hero-header">
                     <div class="personality-hero-name" id="personality-name">-</div>
                     <div class="personality-hero-code" id="personality-code">-</div>
@@ -1581,7 +1659,7 @@
                         this.calculateResult();
                         this.renderResult();
                         requestAnimationFrame(() => {
-                            this.switchSection('result');
+                            this.switchSection('join');
                         });
                     } catch (error) {
                         console.error('计算或渲染出错:', error);
@@ -1955,6 +2033,10 @@
                 });
             },
 
+            viewResult() {
+                this.switchSection('result');
+            },
+
             restartTest() {
                 localStorage.removeItem('quiz_progress');
                 localStorage.removeItem('quiz_result');
@@ -1968,7 +2050,7 @@
                 const type = this.result.personalityType;
                 const topFactors = this.result.topFactors;
 
-                let text = `🎯 因子人格：${type.name}（${type.code}）\n`;
+                let text = `🎯 投资人格：${type.name}（${type.code}）\n`;
                 text += `${type.tagline}\n\n`;
                 text += `📊 量化因子组合：\n`;
                 topFactors.forEach(f => {
@@ -1976,7 +2058,12 @@
                 });
                 text += `\n💡 适配因子：${type.factorAdvice}\n`;
                 text += `\n${type.epitaph}\n`;
-                text += `\n—— 因子人格测试结果，仅供参考。`;
+                text += `\n—— 投资人格测试结果，仅供参考。\n`;
+                text += `\n🏇 赛马量化AI夏令营报名中\n`;
+                text += `活动时间：2026.07.04 13:30 ~ 2026.08.15 23:59\n`;
+                text += `活动地点：上海交通大学上海高级金融学院(徐汇校区)\n`;
+                text += `活动费用：公益活动，报名费参赛打榜返还！\n`;
+                text += `报名链接：weixin://dl/business/?t=TTfRb88YlIt`;
 
                 navigator.clipboard.writeText(text).then(() => {
                     this.showToast('复制成功，可分享给好友');
