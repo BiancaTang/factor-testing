@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>人格-量化因子适配测试器</title>
+    <title>因子人格测试</title>
     <style>
         * {
             margin: 0;
@@ -329,6 +329,125 @@
         /* ========== Result Section ========== */
         #section-result {
             padding: 20px 0 40px 0;
+        }
+
+        .top-factor-card {
+            border: 1px solid rgba(22, 93, 255, 0.2);
+            background: linear-gradient(135deg, rgba(22, 93, 255, 0.08) 0%, rgba(212, 175, 55, 0.08) 100%);
+        }
+
+        .top-factor-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray-color);
+            margin-bottom: 10px;
+        }
+
+        .top-factor-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--title-color);
+            line-height: 1.3;
+        }
+
+        .top-factor-score {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-color);
+        }
+
+        .personality-hero-card {
+            border: 1px solid rgba(212, 175, 55, 0.35);
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, rgba(22, 93, 255, 0.06) 100%);
+        }
+
+        .personality-hero-header {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .personality-hero-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--title-color);
+            margin-bottom: 4px;
+        }
+
+        .personality-hero-code {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-color);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .personality-hero-tagline {
+            font-size: 15px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .personality-image-wrapper {
+            margin: 20px 0;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            background: #F7F8FA;
+            border: 1px solid #E8EAEF;
+        }
+
+        .personality-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .personality-profile-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 16px 0;
+        }
+
+        .personality-profile-item {
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: var(--border-radius);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .personality-profile-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .personality-profile-text {
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .personality-factor-advice {
+            padding: 14px;
+            background: rgba(22, 93, 255, 0.06);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-top: 8px;
+        }
+
+        .personality-epitaph {
+            margin-top: 16px;
+            padding: 16px;
+            background: #F7F8FA;
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            color: var(--gray-color);
+            line-height: 1.8;
+            font-style: italic;
+            text-align: center;
         }
 
         .result-card {
@@ -680,8 +799,8 @@
     <div class="container">
         <!-- Index Section -->
         <div id="section-index" class="section active">
-            <h1 class="index-title">你的性格，适合哪种量化因子？</h1>
-            <p class="index-subtitle">2 分钟测试，找到最适配你性格的投资策略</p>
+            <h1 class="index-title">因子人格测试</h1>
+            <p class="index-subtitle">你的投资灵魂，是什么形状？</p>
             
             <div class="geometric-decoration">
                 <div class="geometric-circle circle-1"></div>
@@ -690,15 +809,15 @@
             </div>
 
             <div class="value-points">
-                <div class="value-point">基于大五人格模型 + 行为金融学设计</div>
-                <div class="value-point">8 大量化因子精准匹配</div>
-                <div class="value-point">专属策略建议 + 行为偏差优化</div>
+                <div class="value-point">共 20 题，按直觉选最像你的那个</div>
+                <div class="value-point">8 大量化因子，看看你的灵魂配哪种策略</div>
+                <div class="value-point">不保证你赚钱，但保证你更懂自己为什么没赚</div>
             </div>
 
             <button class="btn-primary" onclick="app.startQuiz()">开始测试</button>
 
             <div class="compliance-statement">
-                本测试仅供参考，不构成任何投资建议。市场有风险，投资需谨慎。测试结果完全由您的答案决定，系统不负责任何投资决策后果。
+                本测试不保证你赚钱，但保证你更了解自己为什么没赚钱。市场有风险，投资需谨慎，结果仅供参考。
             </div>
         </div>
 
@@ -730,18 +849,36 @@
                 <span class="loading-dot"></span>
                 <span class="loading-dot"></span>
             </div>
-            <div class="loading-text">正在为你匹配专属量化因子…</div>
+            <div class="loading-text">正在扫描你的投资灵魂，匹配专属量化因子…</div>
         </div>
 
         <!-- Result Section -->
         <div id="section-result" class="section">
-            <div class="result-card">
-                <div class="result-title">你的人格标签</div>
-                <div class="tag-container">
-                    <div class="personality-tag" id="personality-tag"></div>
-                    <div class="tag-description" id="tag-description"></div>
+            <div class="result-card personality-hero-card">
+                <div class="result-title">你的因子人格</div>
+                <div class="personality-hero-header">
+                    <div class="personality-hero-name" id="personality-name">-</div>
+                    <div class="personality-hero-code" id="personality-code">-</div>
+                    <div class="personality-hero-tagline" id="personality-tagline"></div>
                 </div>
+                <div class="personality-image-wrapper">
+                    <img id="personality-image" class="personality-image" alt="人格形象" />
+                </div>
+                <div class="result-title" style="margin-top: 16px;">15 维画像</div>
+                <div class="personality-profile-list" id="personality-profile"></div>
+                <div class="result-title">适配因子</div>
+                <div class="personality-factor-advice" id="personality-factor-advice"></div>
+                <div class="personality-epitaph" id="personality-epitaph"></div>
+            </div>
 
+            <div class="result-card top-factor-card">
+                <div class="top-factor-title">量化因子（最高匹配）</div>
+                <div class="top-factor-name" id="top-factor-name">-</div>
+                <div class="top-factor-score" id="top-factor-score">匹配得分：-</div>
+            </div>
+
+            <div class="result-card">
+                <div class="result-title">九维人格雷达图</div>
                 <div class="radar-container">
                     <canvas id="radarCanvas" width="300" height="300"></canvas>
                 </div>
@@ -793,26 +930,226 @@
     <script>
         // ========== Global Configuration ==========
         const questionList = [
-            { id: 1, content: "我愿意尝试新的投资思路和小众策略，不局限于传统方法", dimension: "openness", isReverse: false },
-            { id: 2, content: "做投资决策前，我会提前制定好明确的买入、卖出计划", dimension: "conscientiousness", isReverse: false },
-            { id: 3, content: "我经常和朋友、社群交流投资信息，喜欢跟着热点方向布局", dimension: "extraversion", isReverse: false },
-            { id: 4, content: "持仓出现浮亏时，我很容易焦虑不安，甚至影响睡眠", dimension: "neuroticism", isReverse: false },
-            { id: 5, content: "当身边人都在买某只股票时，我很难坚持自己原本的计划", dimension: "agreeableness", isReverse: false },
-            { id: 6, content: "我更喜欢成熟稳定的投资标的，不喜欢不确定性强的新事物", dimension: "openness", isReverse: true },
-            { id: 7, content: "我买卖经常凭当下感觉，不会提前做详细计划", dimension: "conscientiousness", isReverse: true },
-            { id: 8, content: "我更习惯自己独立研究，很少主动和别人讨论投资标的", dimension: "extraversion", isReverse: true },
-            { id: 9, content: "面对亏损我能保持平静，不会因为短期波动乱了节奏", dimension: "neuroticism", isReverse: true },
-            { id: 10, content: "即使和多数人意见不同，我也敢做出逆向的投资决策", dimension: "agreeableness", isReverse: true },
-            { id: 11, content: "为了追求更高收益，我可以接受本金短期回撤20%以上", dimension: "riskTolerance", isReverse: false },
-            { id: 12, content: "同样金额的亏损带来的痛苦，远大于同等盈利带来的快乐", dimension: "lossAversion", isReverse: false },
-            { id: 13, content: "我愿意持有一只标的3年以上，来换取长期的收益回报", dimension: "patience", isReverse: false },
-            { id: 14, content: "我觉得自己的选股/择时能力，超过市场上大多数投资者", dimension: "overconfidence", isReverse: false },
-            { id: 15, content: "比起高收益高波动，我更愿意赚稳健、波动小的钱", dimension: "riskTolerance", isReverse: true },
-            { id: 16, content: "看到持仓浮亏，我会比看到浮盈更在意、更频繁地看盘", dimension: "lossAversion", isReverse: false },
-            { id: 17, content: "持有标的超过半年不涨，我就会忍不住想换仓", dimension: "patience", isReverse: true },
-            { id: 18, content: "我经常因为觉得自己判断正确，而重仓押注单一标的", dimension: "overconfidence", isReverse: false },
-            { id: 19, content: "我做投资以来，从来没有过任何一次后悔的操作", dimension: "lie", isReverse: false },
-            { id: 20, content: "面对亏损，我从来不会有任何情绪波动", dimension: "lie", isReverse: false }
+            {
+                id: 1, dimension: "openness", isReverse: false,
+                content: "刷到小红书上一个你完全没听过的量化策略，博主说得头头是道，你的第一反应是？",
+                options: [
+                    "A. 这不就是我吗？我早就在用了（只是没告诉别人）",
+                    "B. 有点意思，收藏了，然后永远不再打开",
+                    "C. 先看评论区有没有人已经亏了",
+                    "D. 这种偏门的东西，我看看就好，不会真投",
+                    "E. 直接划走，我的策略就是最好的，不需要新的"
+                ]
+            },
+            {
+                id: 2, dimension: "conscientiousness", isReverse: false,
+                content: "你准备买一只股票/ETF，买之前你会？",
+                options: [
+                    "A. 已经把买入价、止损价、目标价、仓位比例写进备忘录，甚至设了闹钟",
+                    "B. 大概想好了买多少，心里有个数",
+                    "C. 先买一点试试，剩下的看情况再加",
+                    "D. 看到价格还行，直接梭哈，计划赶不上变化",
+                    "E. 先买再说，买完再研究，研究完可能就已经亏了"
+                ]
+            },
+            {
+                id: 3, dimension: "extraversion", isReverse: false,
+                content: "投资群里突然有人发了一条「内部消息，这只必涨」，你？",
+                options: [
+                    "A. 第一时间私信他问代码，顺便问问还有没有下一波",
+                    "B. 默默截图保存，然后打开交易软件搜一下",
+                    "C. 先在群里问「有没有依据」，其实心里已经蠢蠢欲动了",
+                    "D. 看大家都在讨论，觉得多少有点道理，先观望",
+                    "E. 立刻退群，这种消息我见多了，全是韭菜召唤术"
+                ]
+            },
+            {
+                id: 4, dimension: "neuroticism", isReverse: false,
+                content: "你的持仓今天绿了，而且绿得有点难看。今晚你？",
+                options: [
+                    "A. 能睡着，但会半夜三点醒来打开软件再看一眼",
+                    "B. 睡前打开软件看了五次，带着焦虑勉强入睡",
+                    "C. 正常睡觉，但明天开盘前一定会提前醒来",
+                    "D. 其实还好，投资本来就有波动，正常作息",
+                    "E. 绿就绿了，又不是第一次，关灯吃面，睡得很香"
+                ]
+            },
+            {
+                id: 5, dimension: "agreeableness", isReverse: false,
+                content: "全办公室都在热烈讨论某只「必涨」股票，只有你原本打算买另一只。你会？",
+                options: [
+                    "A. 算了，我也买他们那只吧，毕竟大家都在买",
+                    "B. 犹犹豫豫，最后各买一半，两头下注",
+                    "C. 嘴上附和，但偷偷按原计划买了自己那只",
+                    "D. 表面跟风买了一点，实际上大仓位还在自己选的标的上",
+                    "E. 他们买他们的，我买我的，甚至想做空他们那只"
+                ]
+            },
+            {
+                id: 6, dimension: "openness", isReverse: true,
+                content: "有人给你推荐一个「颠覆性创新」的标的，听起来很牛，但波动率极高，可能一天涨20%也可能跌20%，你？",
+                options: [
+                    "A. 这不就是为我量身定制的？满仓干",
+                    "B. 小仓位试试，亏了就当交学费，赚了就是认知变现",
+                    "C. 先加个自选，等它涨稳了再进——虽然一般等不到",
+                    "D. 这种不确定性太强的，我尽量不参与",
+                    "E. 我买东西都要看七天无理由退货的，这种标的？告辞"
+                ]
+            },
+            {
+                id: 7, dimension: "conscientiousness", isReverse: true,
+                content: "你平时的交易节奏更接近？",
+                options: [
+                    "A. 我就是计划本身，每笔交易都有战术手册",
+                    "B. 大部分时候有计划，偶尔手痒会临时买一点",
+                    "C. 一半计划一半感觉，看那天心情",
+                    "D. 经常凭着「感觉来了」就下单，事后才想起没做功课",
+                    "E. 我的计划就是：没有计划。市场就是我的计划。"
+                ]
+            },
+            {
+                id: 8, dimension: "extraversion", isReverse: true,
+                content: "关于你的投资操作，你更倾向于？",
+                options: [
+                    "A. 不仅自己买，还要拉着身边所有人一起买，独亏亏不如众亏亏",
+                    "B. 会在小群里分享，但不会到处宣扬",
+                    "C. 偶尔在社交平台晒个收益，主要是为了记录",
+                    "D. 基本不跟别人说，自己的钱自己负责",
+                    "E. 我的持仓是我的数字秘密，连我对象都不知道我买了什么"
+                ]
+            },
+            {
+                id: 9, dimension: "neuroticism", isReverse: true,
+                content: "市场突然暴跌，你手里的持仓也在跌，但还没到止损线。你？",
+                options: [
+                    "A. 立刻全仓割肉，然后发现割在了最低点",
+                    "B. 手忙脚乱地把所有软件关掉，假装没看见",
+                    "C. 一边焦虑一边告诉自己「要遵守纪律」，但手在抖",
+                    "D. 正常查看，该止损止损，该持有持有，不 panic",
+                    "E. 不仅不慌，甚至想加仓——别人恐惧我贪婪，懂？"
+                ]
+            },
+            {
+                id: 10, dimension: "agreeableness", isReverse: true,
+                content: "当所有人都在看多，只有你一个人觉得要跌。你的真实想法是？",
+                options: [
+                    "A. 肯定是我错了，这么多人看多怎么会错",
+                    "B. 有点慌，但还是按自己的判断来，只是少买一点",
+                    "C. 心里很虚，但嘴上坚持自己的看法",
+                    "D. 我有我的逻辑，市场最终会验证的，坚持",
+                    "E. 全部人都在买？太好了，我正好做空，赚的就是共识的钱"
+                ]
+            },
+            {
+                id: 11, dimension: "riskTolerance", isReverse: false,
+                content: "如果你的投资账户短期回撤20%，你？",
+                options: [
+                    "A. 加仓，必须加仓，这是别人恐惧我贪婪的时刻",
+                    "B. 有点肉疼，但如果逻辑没变就继续拿着",
+                    "C. 开始怀疑自己是不是错了，犹豫要不要止损",
+                    "D. 赶紧回撤，20%对我来说已经是不可承受之重了",
+                    "E. 我根本不会让这种情况发生，我的配置不可能回撤20%"
+                ]
+            },
+            {
+                id: 12, dimension: "lossAversion", isReverse: false,
+                content: "赚了1万的快乐 vs 亏了1万的痛苦，对你来说？",
+                options: [
+                    "A. 快乐是天上的烟花，痛苦是地上的钉子，完全不是一个量级",
+                    "B. 亏1万的痛苦大概是赚1万快乐的2倍吧",
+                    "C. 都还好，数字而已，我看的是长期收益",
+                    "D. 其实赚的时候也没那么快乐，亏的时候确实很难受",
+                    "E. 我就没怎么赚过，所以主要是体会痛苦"
+                ]
+            },
+            {
+                id: 13, dimension: "patience", isReverse: false,
+                content: "你买了一只你看好的标的，但它连续半年纹丝不动，你？",
+                options: [
+                    "A. 继续拿着，时间是我的朋友，它在蓄势",
+                    "B. 虽然有点着急，但还是会坚持原计划",
+                    "C. 开始怀疑自己的判断，频繁查看有没有新消息",
+                    "D. 半年太久了，我已经开始把仓位挪去其他标的了",
+                    "E. 什么？我一个月不涨就想走了，半年？早没了"
+                ]
+            },
+            {
+                id: 14, dimension: "overconfidence", isReverse: false,
+                content: "看到某投资大V的持仓和你的正好相反，而且他的粉丝比你多一百倍，你内心？",
+                options: [
+                    "A. 他粉丝多不代表他厉害，我坚信自己是对的",
+                    "B. 他可能是另一种风格，我尊重但不动摇",
+                    "C. 有点动摇，但我会再看看数据再决定",
+                    "D. 会认真思考他是不是看到了我没看到的东西",
+                    "E. 开始怀疑自己，可能我真的错了"
+                ]
+            },
+            {
+                id: 15, dimension: "riskTolerance", isReverse: true,
+                content: "给你两个选择，你更倾向？",
+                options: [
+                    "A. 要么暴富要么死，高收益高波动才是人生",
+                    "B. 可以接受波动，但希望整体收益是正的",
+                    "C. 稳健为主，偶尔可以小赌一下",
+                    "D. 安全第一，宁可少赚也不想亏",
+                    "E. 我理财的目标是跑赢通胀，不亏钱就是胜利"
+                ]
+            },
+            {
+                id: 16, dimension: "lossAversion", isReverse: false,
+                content: "你今天打开交易软件的次数？",
+                options: [
+                    "A. 每小时看一次，绿的时候看得更频繁",
+                    "B. 盘中会看几次，收盘必看",
+                    "C. 早晚各看一次，中午偶尔刷一下",
+                    "D. 一天看一次，收盘后瞄一眼",
+                    "E. 软件？我设了自动提醒，不到关键价位都不打开的"
+                ]
+            },
+            {
+                id: 17, dimension: "patience", isReverse: true,
+                content: "你的持仓半年没涨，朋友告诉你另一只「很确定，内部消息」的标的，你？",
+                options: [
+                    "A. 立刻调仓，半年不涨的肯定是垃圾，内部消息不等人",
+                    "B. 先把原来那只减一点，拿去买新的试试",
+                    "C. 犹豫很久，最后各买一半，结果两边都不涨",
+                    "D. 心动但不动，坚守自己的原计划",
+                    "E. 内部消息？我听过一百个了，九十九个都是坑"
+                ]
+            },
+            {
+                id: 18, dimension: "overconfidence", isReverse: false,
+                content: "你非常确定自己的判断是对的，甚至已经在脑海里想象了赚钱后的朋友圈文案，这时你会？",
+                options: [
+                    "A. 全仓押上，这种机会一辈子没几次",
+                    "B. 重仓但不 all in，给自己留条后路",
+                    "C. 正常仓位，虽然很有信心但不忘纪律",
+                    "D. 反而会怀疑「我是不是太自信了」，减一点仓",
+                    "E. 立刻复盘是不是哪里漏看了，这种确定感往往很危险"
+                ]
+            },
+            {
+                id: 19, dimension: "lie", isReverse: false,
+                content: "回顾你的投资生涯，你？",
+                options: [
+                    "A. 确实有过几次后悔，但总体还是学到了很多",
+                    "B. 有后悔的，但我不说",
+                    "C. 后悔？我只后悔买少了",
+                    "D. 从来没后悔过，因为每一步都是当时的最佳选择",
+                    "E. 从来没后悔过，我每一单都是对的"
+                ]
+            },
+            {
+                id: 20, dimension: "lie", isReverse: false,
+                content: "看到账户大幅浮亏，你？",
+                options: [
+                    "A. 多少有点难受，但还能理性处理",
+                    "B. 心情不好，但会想办法转移注意力",
+                    "C. 会复盘，但情绪确实受影响",
+                    "D. 其实还好，我会默默关灯吃面",
+                    "E. 完全没有情绪波动，我的内心像一片死海"
+                ]
+            }
         ];
 
         const personalityDimensions = [
@@ -887,33 +1224,217 @@
             reversal: ["适合手动逆向交易，无对应主流ETF"]
         };
 
-        const personalityTags = {
-            defensiveDividend: {
-                name: "防御红利型",
-                description: "你对波动和亏损比较敏感，优先追求本金安全，适合低波动、高分红的防御类策略，赚稳稳的现金流收益。",
-                conditions: (scores) => scores.neuroticism >= 70 && scores.lossAversion >= 70 && scores.riskTolerance < 60
+        const personalityTypes = [
+            {
+                id: 1, key: 'yolo', name: '赌狗', code: 'YOLO',
+                tagline: '梭哈是一种信仰，归零是另一种回家',
+                image: 'pic/dugou_1.png',
+                checks: [
+                    { dim: 'openness', op: 'gte', value: 7 },
+                    { dim: 'riskTolerance', op: 'gte', value: 7 },
+                    { dim: 'conscientiousness', op: 'lte', value: 4 },
+                    { dim: 'overconfidence', op: 'gte', value: 6 }
+                ],
+                profile: [
+                    { label: '自我', text: '坚信自己天生就是吃这碗饭的，只不过碗还没端稳' },
+                    { label: '情感', text: '赚钱时觉得自己是天才，亏钱时觉得市场错了' },
+                    { label: '态度', text: '计划赶不上变化，变化不如梭哈' },
+                    { label: '行动', text: '看到机会就 All in，看到更大的机会就借钱 All in' },
+                    { label: '社交', text: '群里喊得最响，晒收益最频繁，亏了就潜水' }
+                ],
+                factorAdvice: '高动量、高波动、杠杆策略',
+                epitaph: '他这辈子只 All in 了两次，第一次归零，第二次还在等归零。'
             },
-            stableValue: {
-                name: "稳健价值型",
-                description: "你是自律且有耐心的长期主义者，情绪稳定、纪律性强，能忍受长期等待换取确定性收益，最适合靠基本面和时间赚钱的策略。",
-                conditions: (scores) => scores.conscientiousness >= 70 && scores.patience >= 70 && scores.riskTolerance < 60
+            {
+                id: 2, key: 'green', name: '青蛙王子', code: 'GREEN',
+                tagline: '从头绿到尾，但永远相信自己是王子',
+                image: 'pic/qingwagongzhu_2.png',
+                checks: [
+                    { dim: 'neuroticism', op: 'gte', value: 7 },
+                    { dim: 'lossAversion', op: 'gte', value: 7 },
+                    { dim: 'patience', op: 'lte', value: 4 }
+                ],
+                profile: [
+                    { label: '自我', text: '觉得自己研究得挺认真的，怎么就是绿呢' },
+                    { label: '情感', text: '浮亏时心碎，浮盈时更心碎——因为卖飞了' },
+                    { label: '态度', text: '不割就不算亏，只要不卖就还能骗自己是王子' },
+                    { label: '行动', text: '凌晨三点打开软件，凌晨四点打开小红书搜「为什么我的股票不涨」' },
+                    { label: '社交', text: '不在群里说话，但会偷偷截图别人的收益图' }
+                ],
+                factorAdvice: '无，建议先去庙里拜拜',
+                epitaph: '他的持仓颜色比他的健康码还绿，但他的心依然充满希望。'
             },
-            growthExplorer: {
-                name: "成长探索型",
-                description: "你对新事物充满好奇，愿意为高收益承担波动，擅长挖掘新兴机会，适合成长赛道、产业趋势类的投资策略。",
-                conditions: (scores) => scores.openness >= 70 && scores.riskTolerance >= 70
+            {
+                id: 3, key: 'sleep', name: '装睡的人', code: 'SLEEP',
+                tagline: '买入，然后删除软件，三年后见',
+                image: 'pic/zhuangshuideren_3.png',
+                checks: [
+                    { dim: 'conscientiousness', op: 'gte', value: 7 },
+                    { dim: 'patience', op: 'gte', value: 7 },
+                    { dim: 'neuroticism', op: 'lte', value: 4 },
+                    { dim: 'overconfidence', op: 'lte', value: 4 }
+                ],
+                profile: [
+                    { label: '自我', text: '我知道我不聪明，所以我选择不折腾' },
+                    { label: '情感', text: '没有情绪，像一块被扔进股市里的石头' },
+                    { label: '态度', text: '时间是最好的朋友，也是最好的安眠药' },
+                    { label: '行动', text: '制定计划，执行计划，然后忘记计划' },
+                    { label: '社交', text: '从不讨论持仓，别人问就是「早就忘了买了什么」' }
+                ],
+                factorAdvice: '价值因子、红利因子、长期持有策略',
+                epitaph: '他已经三年没打开软件了，听说他的持仓翻了倍。但他不在乎，因为他还在睡觉。'
             },
-            momentumTrader: {
-                name: "动量交易型",
-                description: "你对市场情绪敏感，交易活跃度高，喜欢紧跟市场热点，适合短周期、顺趋势的交易类策略。",
-                conditions: (scores) => scores.extraversion >= 70 && scores.patience < 60 && scores.overconfidence >= 60
+            {
+                id: 4, key: 'hype', name: '气氛组', code: 'HYPE',
+                tagline: '在哪里跌倒，就在哪里给别人加油',
+                image: 'pic/qifenzu_4.png',
+                checks: [
+                    { dim: 'extraversion', op: 'gte', value: 7 },
+                    { dim: 'agreeableness', op: 'gte', value: 6 },
+                    { dim: 'conscientiousness', op: 'lte', value: 4 }
+                ],
+                profile: [
+                    { label: '自我', text: '热点一个不落，赚钱一次没有，但存在感拉满' },
+                    { label: '情感', text: '买到涨停板时群发红包，买到跌停板时假装在开会' },
+                    { label: '态度', text: '只要大家都买，错也是一起错，不亏' },
+                    { label: '行动', text: '永远在追最后一棒，然后负责把群聊气氛炒热' },
+                    { label: '社交', text: '群聊里的永动机，话题制造机，接盘侠代言人' }
+                ],
+                factorAdvice: '热点题材、事件驱动、社交因子',
+                epitaph: '他买了十只股票，九只亏钱，但他是十个群里最活跃的人。'
             },
-            balanced: {
-                name: "均衡适配型",
-                description: "你的人格特质较为均衡，对不同风格的策略都有一定适配度，适合通过分散化的因子组合平滑波动。",
-                conditions: () => true
+            {
+                id: 5, key: 'rebel', name: '反骨仔', code: 'REBEL',
+                tagline: '全世界都看多的时候，我已经在找做空按钮了',
+                image: 'pic/fanguzai_5.png',
+                checks: [
+                    { dim: 'agreeableness', op: 'lte', value: 4 },
+                    { dim: 'overconfidence', op: 'gte', value: 6 },
+                    { dim: 'openness', op: 'gte', value: 6 }
+                ],
+                profile: [
+                    { label: '自我', text: '人群是他的反向指标，共识是他的做空信号' },
+                    { label: '情感', text: '别人恐惧时他贪婪，别人贪婪时他觉得别人好吵' },
+                    { label: '态度', text: '不唱反调会死，不逆着来浑身难受' },
+                    { label: '行动', text: '大盘暴涨他做空，大盘暴跌他抄底，两边挨打但从不认错' },
+                    { label: '社交', text: '没有投资群，因为所有群都把他踢了' }
+                ],
+                factorAdvice: '逆向因子、反转因子、多空对冲',
+                epitaph: '他站在人群的对立面，不是因为聪明，是因为他天生讨厌排队。'
+            },
+            {
+                id: 6, key: 'hoard', name: '仓鼠', code: 'HOARD',
+                tagline: '只囤不买，现金为王，通胀是什么不认识',
+                image: 'pic/cangshu_6.png',
+                checks: [
+                    { dim: 'openness', op: 'lte', value: 4 },
+                    { dim: 'riskTolerance', op: 'lte', value: 4 },
+                    { dim: 'lossAversion', op: 'gte', value: 7 }
+                ],
+                profile: [
+                    { label: '自我', text: '我不理财，财不离我——只要我不碰，就不会亏' },
+                    { label: '情感', text: '看到亏损会生理性不适，看到盈利会怀疑自己是不是冒了太大风险' },
+                    { label: '态度', text: '余额宝是最后的妥协，股票是高危禁区，基金是遥远的传说' },
+                    { label: '行动', text: '把钱分成十份，九份存定期，一份存余额宝' },
+                    { label: '社交', text: '不参与任何投资讨论，因为「我不懂，所以我不碰」' }
+                ],
+                factorAdvice: '货币基金、国债、银行理财',
+                epitaph: '他战胜了99%的股民，因为他根本没进场。'
+            },
+            {
+                id: 7, key: 'alchemy', name: '炼丹师', code: 'ALCHEMY',
+                tagline: '回测一千次，实盘亏十次，但下一个一定会不同',
+                image: 'pic/liandanshi_7.png',
+                checks: [
+                    { dim: 'openness', op: 'gte', value: 7 },
+                    { dim: 'conscientiousness', op: 'gte', value: 6 },
+                    { dim: 'overconfidence', op: 'gte', value: 6 },
+                    { dim: 'extraversion', op: 'lte', value: 4 }
+                ],
+                profile: [
+                    { label: '自我', text: '他不是在投资，他是在做科研——虽然实验室是他亏钱的地方' },
+                    { label: '情感', text: '策略失效时的崩溃，和策略有效时的狂喜，是他人生的双螺旋' },
+                    { label: '态度', text: '数据不会说谎，但市场会说「你的数据样本不够」' },
+                    { label: '行动', text: '写代码、跑回测、优化参数、上实盘、亏钱、再写代码' },
+                    { label: '社交', text: '不跟人交流，只跟因子交流，有时候因子也不理他' }
+                ],
+                factorAdvice: '多因子策略、量化因子、机器学习因子',
+                epitaph: '他的策略在回测里战胜了巴菲特，在实盘里输给了自己。'
+            },
+            {
+                id: 8, key: 'plant', name: '盆栽观察员', code: 'PLANT',
+                tagline: '每天盯着它看八小时，但它三年就是不涨',
+                image: 'pic/penzaiguanchayuan_8.png',
+                checks: [
+                    { dim: 'patience', op: 'gte', value: 7 },
+                    { dim: 'neuroticism', op: 'gte', value: 6 },
+                    { dim: 'lossAversion', op: 'gte', value: 6 }
+                ],
+                profile: [
+                    { label: '自我', text: '他比上市公司CEO还关心这家公司，但公司不认识他' },
+                    { label: '情感', text: '每天看盘八小时，心情像心电图，而心电图就是K线图' },
+                    { label: '态度', text: '不卖就不亏，但我就是忍不住要看' },
+                    { label: '行动', text: '持仓三年不动弹，但软件打开次数超过微信' },
+                    { label: '社交', text: '会跟人讨论自己的持仓，但从不止损，因为「都拿了这么久了」' }
+                ],
+                factorAdvice: '长期持有、基本面因子、低频交易',
+                epitaph: '他的持仓像他的盆栽——每天浇水，三年没开花，但他依然相信春天会来。'
+            },
+            {
+                id: 9, key: 'gecko', name: '壁虎', code: 'GECKO',
+                tagline: '断尾求生，活着就是胜利',
+                image: 'pic/bihu_9.png',
+                checks: [
+                    { dim: 'lossAversion', op: 'gte', value: 6 },
+                    { dim: 'conscientiousness', op: 'gte', value: 6 },
+                    { dim: 'patience', op: 'lte', value: 4 }
+                ],
+                profile: [
+                    { label: '自我', text: '我不是来赚钱的，我是来不亏钱的' },
+                    { label: '情感', text: '止损时的痛苦远小于套牢时的绝望，所以他选择先痛苦' },
+                    { label: '态度', text: '止损线是他的生命线，稍有风吹草动就跑路' },
+                    { label: '行动', text: '买入前先设好止损，触发时比谁都跑得快，回头一看卖在最低点' },
+                    { label: '社交', text: '会在群里提醒大家「该止损了」，然后自己第一个止损' }
+                ],
+                factorAdvice: '趋势跟踪、止损策略、低波动因子',
+                epitaph: '他很少大亏，也极少大赚。他的人生信条是：活着，就有手续费。'
+            },
+            {
+                id: 10, key: 'ghost', name: '独狼', code: 'GHOST',
+                tagline: '没有群聊，没有观点，没有情绪。只有计划。',
+                image: 'pic/gulang_10.png',
+                checks: [
+                    { dim: 'extraversion', op: 'lte', value: 4 },
+                    { dim: 'agreeableness', op: 'lte', value: 4 },
+                    { dim: 'neuroticism', op: 'lte', value: 4 },
+                    { dim: 'conscientiousness', op: 'gte', value: 7 }
+                ],
+                profile: [
+                    { label: '自我', text: '市场不需要朋友，市场只需要正确的人' },
+                    { label: '情感', text: '没有大喜，没有大悲，只有执行和不执行' },
+                    { label: '态度', text: '噪音是交易者最大的敌人，而群聊是噪音的制造机' },
+                    { label: '行动', text: '独立研究，独立决策，独立承担，独立删除群聊' },
+                    { label: '社交', text: '没有投资群，没有讨论群，没有同事群，没有群' }
+                ],
+                factorAdvice: '独立研究因子、基本面深度、冷门策略',
+                epitaph: '他不在群里说话，因为他知道——群里只有两种人，想骗你的，和想让你相信他能带你赚钱的。'
             }
-        };
+        ];
+
+        function checkDimension(raw, check) {
+            const value = raw[check.dim];
+            if (check.op === 'gte') return value >= check.value;
+            if (check.op === 'lte') return value <= check.value;
+            return false;
+        }
+
+        function passesPersonalityChecks(raw, checks) {
+            return checks.every(check => checkDimension(raw, check));
+        }
+
+        function countPersonalityMatches(raw, checks) {
+            return checks.filter(check => checkDimension(raw, check)).length;
+        }
 
         // ========== Core Application Logic ==========
         const app = {
@@ -986,10 +1507,8 @@
             renderOptions(question) {
                 const container = document.getElementById('options-container');
                 container.innerHTML = '';
-                
-                const optionTexts = ['非常不同意', '不同意', '中立', '同意', '非常同意'];
-                
-                optionTexts.forEach((text, index) => {
+
+                question.options.forEach((text, index) => {
                     const score = index + 1;
                     const div = document.createElement('div');
                     div.className = `option ${this.answers[this.currentQuestion - 1] === score ? 'selected' : ''}`;
@@ -1049,8 +1568,8 @@
             submitQuiz() {
                 if (!this.validateAnswers()) {
                     this.showModal(
-                        '无效作答',
-                        '请根据真实情况作答，结果才会更准确哦',
+                        '你还没睡醒吧',
+                        '测谎题选了「完美人设」——请诚实地面对自己，重新作答。',
                         [{ text: '返回', onClick: () => this.closeModal() }]
                     );
                     return;
@@ -1083,17 +1602,18 @@
             },
 
             calculateResult() {
-                const personalityScores = this.calculatePersonalityScores();
-                const factorScores = this.calculateFactorScores(personalityScores);
+                const { normalized, raw } = this.calculatePersonalityScores();
+                const factorScores = this.calculateFactorScores(normalized);
                 const topFactors = this.getTopFactors(factorScores);
-                const tag = this.determinePersonalityTag(personalityScores);
-                const recommendations = this.generateRecommendations(personalityScores);
+                const personalityType = this.determinePersonalityType(raw);
+                const recommendations = this.generateRecommendations(normalized);
 
                 this.result = {
-                    personalityScores,
+                    personalityScores: normalized,
+                    personalityRaw: raw,
                     factorScores,
                     topFactors,
-                    tag,
+                    personalityType,
                     recommendations
                 };
 
@@ -1101,28 +1621,27 @@
             },
 
             calculatePersonalityScores() {
-                const scores = {};
+                const rawScores = {};
                 personalityDimensions.forEach(dim => {
-                    scores[dim.key] = 0;
+                    rawScores[dim.key] = 0;
                 });
 
                 questionList.forEach((q, idx) => {
                     if (q.dimension === 'lie') return;
-                    
+
                     let score = this.answers[idx];
                     if (q.isReverse) {
                         score = 6 - score;
                     }
-                    scores[q.dimension] += score;
+                    rawScores[q.dimension] += score;
                 });
 
                 const normalized = {};
-                Object.keys(scores).forEach(key => {
-                    const rawScore = scores[key];
-                    normalized[key] = Math.round((rawScore - 2) / 8 * 100);
+                Object.keys(rawScores).forEach(key => {
+                    normalized[key] = Math.round((rawScores[key] - 2) / 8 * 100);
                 });
 
-                return normalized;
+                return { normalized, raw: rawScores };
             },
 
             calculateFactorScores(personalityScores) {
@@ -1182,14 +1701,24 @@
                 }));
             },
 
-            determinePersonalityTag(scores) {
-                const tags = Object.values(personalityTags);
-                for (let tag of tags) {
-                    if (tag.conditions(scores)) {
-                        return tag;
+            determinePersonalityType(raw) {
+                for (const type of personalityTypes) {
+                    if (passesPersonalityChecks(raw, type.checks)) {
+                        return type;
                     }
                 }
-                return personalityTags.balanced;
+
+                let bestType = personalityTypes[0];
+                let bestCount = countPersonalityMatches(raw, bestType.checks);
+                for (let i = 1; i < personalityTypes.length; i++) {
+                    const type = personalityTypes[i];
+                    const count = countPersonalityMatches(raw, type.checks);
+                    if (count > bestCount || (count === bestCount && type.id < bestType.id)) {
+                        bestCount = count;
+                        bestType = type;
+                    }
+                }
+                return bestType;
             },
 
             generateRecommendations(scores) {
@@ -1221,7 +1750,8 @@
 
             renderResult() {
                 try {
-                    this.renderPersonalityTag();
+                    this.renderPersonalityType();
+                    this.renderTopFactor();
                     this.renderRadarChart();
                     this.renderFactorRanking();
                     this.renderPortfolio();
@@ -1232,10 +1762,34 @@
                 }
             },
 
-            renderPersonalityTag() {
-                const tag = this.result.tag;
-                document.getElementById('personality-tag').textContent = tag.name;
-                document.getElementById('tag-description').textContent = tag.description;
+            renderPersonalityType() {
+                const type = this.result.personalityType;
+                document.getElementById('personality-name').textContent = type.name;
+                document.getElementById('personality-code').textContent = type.code;
+                document.getElementById('personality-tagline').textContent = type.tagline;
+                document.getElementById('personality-factor-advice').textContent = type.factorAdvice;
+                document.getElementById('personality-epitaph').textContent = `「${type.epitaph}」`;
+
+                const profileContainer = document.getElementById('personality-profile');
+                profileContainer.innerHTML = '';
+                type.profile.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'personality-profile-item';
+                    div.innerHTML = `
+                        <div class="personality-profile-label">${item.label}</div>
+                        <div class="personality-profile-text">${item.text}</div>
+                    `;
+                    profileContainer.appendChild(div);
+                });
+
+                document.getElementById('personality-image').src = type.image;
+                document.getElementById('personality-image').alt = type.name;
+            },
+
+            renderTopFactor() {
+                const topFactor = this.result.topFactors[0];
+                document.getElementById('top-factor-name').textContent = topFactor.name;
+                document.getElementById('top-factor-score').textContent = `匹配得分：${topFactor.score}`;
             },
 
             renderRadarChart() {
@@ -1411,15 +1965,18 @@
             },
 
             copyResult() {
-                const tag = this.result.tag;
+                const type = this.result.personalityType;
                 const topFactors = this.result.topFactors;
-                
-                let text = `🎯 人格标签：${tag.name}\n\n`;
-                text += `📊 专属因子组合：\n`;
+
+                let text = `🎯 因子人格：${type.name}（${type.code}）\n`;
+                text += `${type.tagline}\n\n`;
+                text += `📊 量化因子组合：\n`;
                 topFactors.forEach(f => {
                     text += `${f.name} - ${f.weight}%\n`;
                 });
-                text += `\n💡 这是基于人格-量化因子适配测试的结果，仅供参考。`;
+                text += `\n💡 适配因子：${type.factorAdvice}\n`;
+                text += `\n${type.epitaph}\n`;
+                text += `\n—— 因子人格测试结果，仅供参考。`;
 
                 navigator.clipboard.writeText(text).then(() => {
                     this.showToast('复制成功，可分享给好友');

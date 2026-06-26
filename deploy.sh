@@ -64,8 +64,14 @@ deploy_files() {
   log "部署静态文件到 ${WEB_ROOT} ..."
   mkdir -p "${WEB_ROOT}"
   cp "${SCRIPT_DIR}/${HTML_SOURCE}" "${WEB_ROOT}/index.html"
+  if [[ -d "${SCRIPT_DIR}/pic" ]]; then
+    mkdir -p "${WEB_ROOT}/pic"
+    cp -R "${SCRIPT_DIR}/pic/." "${WEB_ROOT}/pic/"
+    log "已复制 pic 图片目录"
+  fi
   chown -R nginx:nginx "${WEB_ROOT}" 2>/dev/null || chown -R www-data:www-data "${WEB_ROOT}" 2>/dev/null || true
   chmod 644 "${WEB_ROOT}/index.html"
+  find "${WEB_ROOT}/pic" -type f -exec chmod 644 {} \; 2>/dev/null || true
 }
 
 write_nginx_config() {
