@@ -506,7 +506,26 @@
         }
 
         #section-join .promo-image-wrapper {
-            margin-bottom: 24px;
+            margin-bottom: 16px;
+        }
+
+        #section-join .btn-download {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 16px;
+            background: var(--card-bg);
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition);
+        }
+
+        #section-join .btn-download:hover {
+            background: var(--primary-color);
+            color: white;
         }
 
         #section-join .btn-primary {
@@ -926,6 +945,7 @@
                 <div class="promo-image-wrapper">
                     <img class="promo-image" src="pic/summer-camp-promo.png" alt="赛马量化AI夏令营" />
                 </div>
+                <button class="btn-download" onclick="app.downloadPoster()">下载海报</button>
                 <button class="btn-primary" onclick="app.viewResult()">已加群，立刻查看结果！</button>
             </div>
         </div>
@@ -2035,6 +2055,29 @@
 
             viewResult() {
                 this.switchSection('result');
+            },
+
+            async downloadPoster() {
+                const filename = '赛马量化AI夏令营海报.png';
+                const url = 'pic/summer-camp-promo.png';
+                try {
+                    const response = await fetch(url);
+                    const blob = await response.blob();
+                    const blobUrl = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.href = blobUrl;
+                    link.download = filename;
+                    link.click();
+                    URL.revokeObjectURL(blobUrl);
+                    this.showToast('海报下载已开始');
+                } catch (error) {
+                    const link = document.createElement('a');
+                    link.href = url;
+                    link.download = filename;
+                    link.target = '_blank';
+                    link.click();
+                    this.showToast('请长按图片保存海报');
+                }
             },
 
             restartTest() {
